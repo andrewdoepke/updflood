@@ -8,7 +8,7 @@ def scan_ports(ip):
     port_list = []
 
     for i in range(0, 1000):
-        s = socket(socket.AF_INET, socket.SOCK_STREAM)
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
         conn = s.connect_ex((t_ip, i))
         if conn == 0:
