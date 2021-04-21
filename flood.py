@@ -10,7 +10,7 @@ def scan_ports(ip):
     for i in range(0, 1000):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-        conn = s.connect_ex((t_ip, i))
+        conn = s.connect_ex(t_ip, i)
         if conn == 0:
             print('Port %d: OPEN' % (i,))
             port_list.append(i)
