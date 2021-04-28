@@ -15,7 +15,8 @@ def scan_ports(ip):
             print('Port %d: OPEN' % (i,))
             port_list.append(i)
         else:
-            print('Port %d: CLOSED' % (i,))
+            #print('Port %d: CLOSED' % (i,))
+            pass #closed
         s.close()
 
     return port_list
