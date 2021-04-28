@@ -39,10 +39,10 @@ def udpflood(target, target_ports, duration):
         if p == len(target_ports):
             p = 0
             
-        print("Attacking %s sent packages %s at the port %s " % (sent, target, target_ports[p]))
+        print("Attacking. %s sent packages to %s at the port %s " % (sent, target, target_ports[p]))
 
 
-targ = "0.0.0.0"
+targ = "127.0.0.1"
 ports = scan_ports(targ)
 dur = 60
 
